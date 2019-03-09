@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head>
+	<title>Show users</title>
+</head>
+<body>
+<% for(var i = 1; i < login.length; i++) { %>
+<form method = "post">
+	<input type = "text" value = "<%= login[i] %>" name = "log">
+	<input type = "submit" value = "Delete">
+</form>
+<% } %>
+</body>
+</html>
