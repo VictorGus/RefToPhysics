@@ -1,14 +1,21 @@
 const db = require('/home/victor/Documents/forPashuss/app/routes/dbconnection.js');
 
 class CRUD{
-    createUser(userLogin, userPassword) {
+    createUser(userLogin, userPassword, response) {
         var randomId = Math.floor(Math.random() * (4000 - 1000 + 1)) + 1000;
-        console.log(randomId);
-        db.query(`INSERT INTO users VALUES('${randomId}'::integer, '${userLogin}', '${userPassword}', false)`, (err,res) => {
-            if(err){
-                throw err;
+        db.query(`SELECT * FROM users WHERE login = '${userLogin}'`, (err, result) => {
+            if(result.rows.length === 0){
+            db.query(`INSERT INTO users VALUES('${randomId}'::integer, '${userLogin}', '${userPassword}', false)`, (err,res) => {
+                if(err){
+                    throw err;
+                }
+             });
             }
-        }); 
+            else {
+                response.send('Such user already exists'); 
+            }
+        })
+       
     }
 
     checkUser(userLogin, userPassword, response) {
@@ -40,6 +47,56 @@ class CRUD{
                 }
             }
             response.render("showusers", {login:logins});
+        })
+    }
+
+    showTasks(response) {
+        db.query(`SELECT * FROM tasks`, (err, res) => {
+            if(err){
+                throw err;
+            }
+            const task = [];
+            var editedTask = [];
+            const taskID = [];
+            for(var i = 0; i < res.rows.length; i++) {
+                task[i] = res.rows[i].text;
+                taskID[i] = res.rows[i].id;
+                editedTask[i] = JSON.stringify(task[i]);
+                editedTask[i] = editedTask[i].replace('{"text":','');
+                editedTask[i] = editedTask[i].replace('}','');
+            }
+            response.render("showtasks", {tasks:editedTask, id:taskID});
+        })
+    }
+
+    showTasksUser(response) {
+        var test = 'Before';
+        db.query(`SELECT * FROM tasks`, (err, res) => {
+            if(err){
+                throw err;
+            }
+            const task = [];
+            var editedTask = [];
+            const taskID = [];
+            for(var i = 0; i < res.rows.length; i++) {
+                task[i] = res.rows[i].text;
+                taskID[i] = res.rows[i].id;
+                editedTask[i] = JSON.stringify(task[i]);
+                editedTask[i] = editedTask[i].replace('{"text":','');
+                editedTask[i] = editedTask[i].replace('}','');
+            }
+            test = 'After';
+            response.render("tasks", {tasks:editedTask, id:taskID});
+        })
+        console.log(test);
+    }
+
+    deleteTasks(id){
+        console.log(id);
+        db.query(`DELETE FROM tasks WHERE id = '${id}'::integer`, (err, res) => {
+            if(err) {
+                throw err;
+            }
         })
     }
 

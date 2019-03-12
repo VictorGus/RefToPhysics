@@ -8,3 +8,5 @@ app.listen(3000, "127.0.0.1", (err, res) => {
     }
     console.log('Server is running on 3000');
 } );
+
+app.use(express.static('public'));

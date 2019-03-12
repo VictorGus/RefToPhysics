@@ -14,10 +14,10 @@ app.get("/reg", (request,response) => {
 
 app.post("/reg", urldecoderParser, (request, response) => {
     if(!request){
-       return response.sendStatus(400);Math.floor(Math.random() * (max - min + 1)) + min;
+       return response.sendStatus(400);
 
     }
-    crud.createUser(request.body.login, request.body.password);
+    crud.createUser(request.body.login, request.body.password, response);
 })
 
 app.get("/login", (request,response) => {
@@ -25,6 +25,9 @@ app.get("/login", (request,response) => {
 })
 
 app.post("/login", urldecoderParser, (request, response) =>  {
+    if(!request){
+        return response.sendStatus(400);
+    }
     crud.checkUser(request.body.login, request.body.password,response);
 })
 
@@ -33,5 +36,24 @@ app.get("/users", (request, response) => {
 })
 
 app.post("/users", urldecoderParser, (request, response) => {
+    if(!request){
+        return response.sendStatus(400);
+    }
     crud.deleteUsers(request.body.log);
 })
+
+app.get("/admintasks", (request, response) => {
+    crud.showTasks(response);  
+})
+
+app.get('/tasks', (request, response) => {
+    crud.showTasksUser(response);
+})
+
+app.post("/admintasks", urldecoderParser, (request, response) => {
+    if(!request){
+        return response.sendStatus(400);
+    }
+    crud.deleteTasks(request.body.taskID);
+})
+
