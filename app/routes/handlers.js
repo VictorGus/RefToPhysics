@@ -57,3 +57,22 @@ app.post("/admintasks", urldecoderParser, (request, response) => {
     crud.deleteTasks(request.body.taskID);
 })
 
+app.get('/themes', (request,response) => {
+    response.sendFile("/home/victor/Documents/forPashuss/app/routes/views/taskthemes.html");
+})
+
+app.get('/kinematics', (request,response) => {
+    crud.showKinematicTasks(response);
+})
+
+app.get('/thermodynamics', (request, response) => {
+    crud.showThermodynamicsTasks(response);
+})
+
+app.get('/quantumphysics', (request, response) => {
+    crud.showQuantumPhysicsTasks(response);
+})
+
+app.get('/mechanics', (request, response) => {
+    crud.showMechanicsTasks(response);
+})

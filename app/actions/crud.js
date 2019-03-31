@@ -21,7 +21,7 @@ class CRUD{
     checkUser(userLogin, userPassword, response) {
         const login = userLogin.toString(userLogin);
         const password = userPassword.toString(userPassword);
-        db.query(`SELECT * FROM users WHERE login = '${login}' AND password = '${password}'`, (err,res) => {
+        db.query(`SELECT * FROM users WHERE login = '${login}'`, (err,res) => {
             if(err){
                 throw err;
             }
@@ -69,8 +69,107 @@ class CRUD{
         })
     }
 
+    showKinematicTasks(response) {
+        db.query(`SELECT * FROM tasks WHERE title = 'Кинематика'`, (err, res) => {
+            if(err){
+                throw err;
+            }
+            const task = [];
+            var editedTask = [];
+            const taskID = [];
+            if(res.rows.length === 0) {
+                editedTask[0] = "Нет задач по теме кинематтика"; 
+                response.render("kinematics", {tasks:editedTask, id:taskID});
+            }
+            else {
+                for(var i = 0; i < res.rows.length; i++) {
+                    task[i] = res.rows[i].text;
+                    taskID[i] = res.rows[i].id;
+                    editedTask[i] = JSON.stringify(task[i]);
+                    editedTask[i] = editedTask[i].replace('{"text":','');
+                    editedTask[i] = editedTask[i].replace('}','');
+                }
+                response.render("kinematics", {tasks:editedTask, id:taskID});
+            }
+        });
+    }
+
+    showThermodynamicsTasks(response) {
+        db.query(`SELECT * FROM tasks WHERE title = 'Термодинамика'`, (err, res) => {
+            if(err){
+                throw err;
+            }
+            const task = [];
+            var editedTask = [];
+            const taskID = [];
+            if(res.rows.length === 0) {
+                editedTask[0] = "Нет задач по теме термодинамика"; 
+                response.render("thermodynamics", {tasks:editedTask, id:taskID});
+            }
+            else {
+                for(var i = 0; i < res.rows.length; i++) {
+                    task[i] = res.rows[i].text;
+                    taskID[i] = res.rows[i].id;
+                    editedTask[i] = JSON.stringify(task[i]);
+                    editedTask[i] = editedTask[i].replace('{"text":','');
+                    editedTask[i] = editedTask[i].replace('}','');
+                }
+                response.render("thermodynamics", {tasks:editedTask, id:taskID});
+            }
+        })
+    }
+
+    showMechanicsTasks(response) {
+        db.query(`SELECT * FROM tasks WHERE title = 'Механические колебания'`, (err, res) => {
+            if(err) {
+                throw err;
+            }
+            const task = [];
+            var editedTask = [];
+            const taskID = [];
+            if(res.rows.length === 0) {
+                editedTask[0] = "Нет задач по теме механические колебания"; 
+                response.render("mechanics", {tasks:editedTask, id:taskID});
+            }
+            else {
+                for(var i = 0; i < res.rows.length; i++) {
+                    task[i] = res.rows[i].text;
+                    taskID[i] = res.rows[i].id;
+                    editedTask[i] = JSON.stringify(task[i]);
+                    editedTask[i] = editedTask[i].replace('{"text":','');
+                    editedTask[i] = editedTask[i].replace('}','');
+                }
+                response.render("mechanics", {tasks:editedTask, id:taskID});
+            }
+        })
+    }
+
+    showQuantumPhysicsTasks(response) {
+        db.query(`SELECT * FROM tasks WHERE title = 'Квантовая физика'`, (err, res) => {
+            if(err){
+                throw err;
+            }
+            const task = [];
+            var editedTask = [];
+            const taskID = [];
+            if(res.rows.length === 0) {
+                editedTask[0] = "Нет задач по теме квантовая физика"; 
+                response.render("quantumphysics", {tasks:editedTask, id:taskID});
+            }
+            else {
+                for(var i = 0; i < res.rows.length; i++) {
+                    task[i] = res.rows[i].text;
+                    taskID[i] = res.rows[i].id;
+                    editedTask[i] = JSON.stringify(task[i]);
+                    editedTask[i] = editedTask[i].replace('{"text":','');
+                    editedTask[i] = editedTask[i].replace('}','');
+                }
+                response.render("quantumphysics", {tasks:editedTask, id:taskID});
+            }
+        })
+    }
+
     showTasksUser(response) {
-        var test = 'Before';
         db.query(`SELECT * FROM tasks`, (err, res) => {
             if(err){
                 throw err;
@@ -85,10 +184,8 @@ class CRUD{
                 editedTask[i] = editedTask[i].replace('{"text":','');
                 editedTask[i] = editedTask[i].replace('}','');
             }
-            test = 'After';
             response.render("tasks", {tasks:editedTask, id:taskID});
         })
-        console.log(test);
     }
 
     deleteTasks(id){
