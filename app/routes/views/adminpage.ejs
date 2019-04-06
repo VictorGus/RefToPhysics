@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script type="text/javascript" src="jquery.js"></script>
+</head>
+<body>
+   <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="jumbotron">
+				<h2>
+					Личный кабинет
+				</h2>
+				<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="http://localhost:3000/">Home</a>
+					</li>
+
+					<li class="breadcrumb-item active">
+						Account
+					</li>
+				</ol>
+			</nav>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="card text-white bg-primary">
+						<h5 class="card-header">
+							Пользователь
+						</h5>
+						<div class="card-body">
+							<p class="card-text">
+								<%= username %>
+							</p>
+						</div>
+						<div class="card-footer">
+              Admin permissions:
+							<%= permission %>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<ul class="nav nav-pills">
+						<li class="nav-item">
+							 <a class="nav-link btn btn-primary" href="http://localhost:3000/account/admintasksmanagement">Задачи <span class="badge badge-light"></span></a><br>
+               <a class="nav-link btn btn-primary" href="#">Статьи <span class="badge badge-light"></span></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

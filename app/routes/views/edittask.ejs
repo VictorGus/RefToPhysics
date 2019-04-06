@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <style>
+  .container-login100-form-btn {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .login100-form-btn {
+    font-family: Ubuntu-Bold;
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 100%;
+    height: 30px;
+    background-color: #0000FF;
+    border-radius: 3px;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+  }
+
+  .login100-form-btn:hover {
+    background-color: #403866;
+  }
+  </style>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script type="text/javascript" src="jquery.js"></script>
+</head>
+<body>
+   <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="jumbotron">
+				<h2>
+					Статьи
+				</h2>
+				<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="http://localhost:3000/account">Account</a>
+					</li>
+
+					<li class="breadcrumb-item">
+						<a href = "#">Articles</a>
+					</li>
+
+          <li class="breadcrumb-item">
+            <a href = "http://localhost:3000/account/admintasksmanagement"> Tasks </a>
+          </li>
+				</ol>
+			</nav>
+      <a class="btn btn-primary btn-large" href="http://localhost:3000/account/admintasksmanagement/addnewtask">Добавить новую задачу</a>
+				</div>
+			</div>
+		</div>
+	</div>
+  <form method = "post" onaction = "account/admintasksmanagement/edit/ed">
+    <label>ID</label>
+    <input type = "text" name = "id" size = 1px readonly value = <%=id %> >
+    <label>Тема задачи</label><br>
+    <select name = "theme">
+      <option name = 'Kinematics' value = "Кинематика">Кинематика</option>
+      <option name = 'Thermodynamics'  value = "Термодинамика">Термодинамика</option>
+      <option name = 'Waves' value = "Механические волны">Механические волны</option>
+      <option name = 'Quantum' value = "Квантовая физика">Квантовая физика</option>
+    </select><br>
+    <label>Текст задачи</label><br>
+      <textarea name = "tasktext" cols = 100 rows = 3> <%=task %> </textarea>
+      <br>
+      <input type = "submit" class = "btn btn-primary btn-large" formaction="edit/ed" value = "Сохранить изменения">
+  </form>
+
+</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

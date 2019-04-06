@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <style>
+  .container-login100-form-btn {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .login100-form-btn {
+    font-family: Ubuntu-Bold;
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 100%;
+    height: 30px;
+    background-color: #0000FF;
+    border-radius: 3px;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+  }
+  
+  .login100-form-btn:hover {
+    background-color: #403866;
+  }
+  </style>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script type="text/javascript" src="jquery.js"></script>
+</head>
+<body>
+   <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="jumbotron">
+				<h2>
+					Статьи
+				</h2>
+				<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="http://localhost:3000/account">Account</a>
+					</li>
+
+					<li class="breadcrumb-item">
+						<a href = "#">Articles</a>
+					</li>
+
+          <li class="breadcrumb-item active">
+            Tasks
+          </li>
+				</ol>
+			</nav>
+      <a class="btn btn-primary btn-large" href="http://localhost:3000/account/admintasksmanagement/addnewtask">Добавить новую задачу</a>
+      <a class="btn btn-primary btn-large" href="http://localhost:3000/account/admintasksmanagement/addnewtask">Поиск задачи</a>
+			<div class="row">
+				<div class="col-md-6">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>
+									#
+								</th>
+								<th>
+									Задача
+								</th>
+								<th>
+								  ID
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+              <% for(var i = 0; i < tasks.length; i++) {%>
+							<tr class="table-active">
+								<td>
+									<%= i+1%>
+								</td>
+								<td>
+									<%= tasks[i] %>
+								</td>
+								<td>
+                  <form method = "post">
+									<input type="text" name = "id" size = 2px  readonly value = <%= id[i] %> >
+                  <input type = "submit" class = "btn btn-primary btn-large" formaction="admintasksmanagement/delete" value = "Удалить">
+                  <br>
+                  <br>
+                  <input type = "submit" class = "btn btn-primary btn-large" formaction="admintasksmanagement/edit" value = "Изменить">
+                </form>
+								</td>
+							</tr>
+            </tbody>
+            <% } %>
+					</table>
+        </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

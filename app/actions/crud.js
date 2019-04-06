@@ -1,4 +1,4 @@
-const db = require('/home/victor/Documents/forPashuss/app/routes/dbconnection.js');
+const db = require('../routes/dbconnection.js');
 
 class CRUD{
     createUser(userLogin, userPassword, response) {
@@ -9,7 +9,8 @@ class CRUD{
                 if(err){
                     throw err;
                 }
-             });
+            });
+                response.sendFile('/home/victor/Documents/forPashuss/app/routes/views/starterPage.html');
             }
             else {
                 response.send('Such user already exists'); 
@@ -68,6 +69,34 @@ class CRUD{
             response.render("showtasks", {tasks:editedTask, id:taskID});
         })
     }
+
+    showTasksAdmin(response) {
+        db.query(`SELECT * FROM tasks`, (err, res) => {
+            if(err){
+                throw err;
+            }
+            const task = [];
+            var editedTask = [];
+            const taskID = [];
+            for(var i = 0; i < res.rows.length; i++) {
+                task[i] = res.rows[i].text;
+                taskID[i] = res.rows[i].id;
+                editedTask[i] = JSON.stringify(task[i]);
+                editedTask[i] = editedTask[i].replace('{"text":','');
+                editedTask[i] = editedTask[i].replace('}','');
+            }
+            response.render("admintasksmanagement", {tasks:editedTask, id:taskID});
+        })
+    }
+
+    /*showAmountOfTasks(request,response) {
+        db.query(`SELECT * FROM tasks`, (err, res) => {
+            if(err){
+                throw err;
+            }
+            request.session.amountoftasks = res.rows.length;
+        })
+    }*/
 
     showKinematicTasks(response) {
         db.query(`SELECT * FROM tasks WHERE title = 'Кинематика'`, (err, res) => {
@@ -189,13 +218,44 @@ class CRUD{
     }
 
     deleteTasks(id){
-        console.log(id);
         db.query(`DELETE FROM tasks WHERE id = '${id}'::integer`, (err, res) => {
             if(err) {
                 throw err;
             }
         })
     }
+
+    taskToEditForm(response, id){
+        db.query(`SELECT * FROM tasks WHERE id = '${id}'::integer`, (err,res) => {
+            if(err) {
+                throw err;
+            }
+            const task = res.rows[0].text;
+            const taskID= res.rows[0].id;
+            var editedTask = JSON.stringify(task);
+            editedTask = editedTask.replace('{"text":','');
+            editedTask = editedTask.replace('}','');
+            response.render("edittask", {task:editedTask, id:taskID});
+        })
+    }
+
+    editTask(id, taskText, titleFromForm){
+        const editedTaskText = JSON.stringify(taskText);
+        db.query(`UPDATE tasks SET text = text || '{"text":${taskText}}'::jsonb, title = '"${titleFromForm}"'  WHERE id = ${id}`, (err,res) => {
+            if(err){
+                throw err;
+            }
+        })
+    }
+
+    addNewTask(id, taskText, titleFromForm){
+        const editedTaskText = JSON.stringify(taskText);
+        db.query(`INSERT INTO tasks VALUES ('${titleFromForm}', '${id}'::integer,'{"text":${taskText}}')`, (err,res) => {
+            if(err){
+                throw err;
+            }
+        })
+    }   
 
     deleteUsers(login){
         db.query(`DELETE FROM users WHERE login = '${login}'`, (err,res) => {
