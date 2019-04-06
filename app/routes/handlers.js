@@ -14,7 +14,7 @@ app.get("/reg", (request,response) => {
 })
 
 app.post("/reg", urldecoderParser, (request, response) => {
-    if(!request){
+    if(!request) {
        return response.sendStatus(400);
     }
     crud.createUser(request.body.username, request.body.pass,response);
@@ -28,31 +28,56 @@ app.get("/login", (request,response) => {
 })
 
 app.get("/account/admintasksmanagement", (request,response) => {
-    crud.showTasksAdmin(response);
+    if(request.session.username) {
+        crud.showTasksAdmin(response);
+    } else {
+        response.redirect('/login');
+    }
 })
 
 app.get("/account/admintasksmanagement/addnewtask", (request, response) => {
-    response.sendFile('views/newTasks.html', {root: __dirname});
+    if(request.session.username) {
+        response.sendFile('views/newTasks.html', {root: __dirname});
+    } else {
+        response.redirect('/login');  
+    } 
 }) 
  
 app.post("/account/admintasksmanagement/addnewtask", urldecoderParser, (request, response) => {
-    crud.addNewTask(request.body.id, request.body.tasktext, request.body.theme);
-    response.redirect("/account/admintasksmanagement");
+    if(request.session.username) {
+        crud.addNewTask(request.body.id, request.body.tasktext, request.body.theme);
+        response.redirect("/account/admintasksmanagement");
+    } else {
+        response.redirect('/login');
+    }
 })
 
 app.post("/account/admintasksmanagement/edit/ed", urldecoderParser, (request, response) => {
-    crud.editTask(request.body.id, request.body.tasktext, request.body.theme);
-    response.redirect("/account/admintasksmanagement");
+    if(request.session.username) {
+        crud.editTask(request.body.id, request.body.tasktext, request.body.theme);
+        response.redirect("/account/admintasksmanagement");
+    } else {
+        response.redirect('/login');
+    }
 })
 
 app.post("/account/admintasksmanagement/edit", urldecoderParser, (request,response) => {
-    crud.taskToEditForm(response, request.body.id);
+    if(request.session.username) {
+        crud.taskToEditForm(response, request.body.id);
+    } else {
+        response.redirect('/login');
+    }
+    
 })
 
 
 app.post("/account/admintasksmanagement/delete", urldecoderParser, (request,response) => {
-    crud.deleteTasks(request.body.id);
-    response.redirect("/account/admintasksmanagement");
+    if(request.session.username){
+        crud.deleteTasks(request.body.id);
+        response.redirect("/account/admintasksmanagement");
+    } else {
+        response.redirect('/login');
+    }
 })
 
 app.post("/login", urldecoderParser, (request, response) =>  {
@@ -84,16 +109,16 @@ app.get("/account", (request, response) => {
     }
 })
 
-app.post("/users", urldecoderParser, (request, response) => {
+/*app.post("/users", urldecoderParser, (request, response) => {
     if(!request){
         return response.sendStatus(400);
     }
     crud.deleteUsers(request.body.log);
-})
+})*/
 
-app.get("/admintasks", (request, response) => {
+/*app.get("/admintasks", (request, response) => {
     crud.showTasks(response);  
-})
+})*/
 
 app.get('/tasks', (request, response) => {
     crud.showTasksUser(response);
